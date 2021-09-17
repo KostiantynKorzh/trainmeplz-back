@@ -37,4 +37,11 @@ def process_labels():
         return make_response(jsonify(labels), 200)
 
 
-labels = ['cat', 'dog', 'iris', 'bike']
+@app.route('/images', methods=['GET'])
+def get_image_stats():
+    if request.method == 'GET':
+        stats = imageservice.count_images_for_all_labels(labels)
+        return make_response(jsonify(stats), 200)
+
+
+labels = ['cat', 'dog']
