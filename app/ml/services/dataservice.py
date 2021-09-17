@@ -29,15 +29,19 @@ def convert_all_images_to_array(label):
     dataset = []
     for image in files:
         print('Processing image ' + image)
-        feature_matrix = convert_image_to_array(label, image)
+        feature_matrix = convert_saved_image_to_array(label, image)
         dataset.append(feature_matrix)
 
     return dataset
 
 
-def convert_image_to_array(label, image_name):
+def convert_saved_image_to_array(label, image_name):
     image = imread(r'C:\Users\Kostiantyn_Korzh\Desktop\self_study\ml\trainmeplz\back\app\images\{}\{}\\'
                    .format(label, image_name))
+    return convert_image_to_array(image)
+
+
+def convert_image_to_array(image):
     formatted_image = resize_image(image)
     height = formatted_image.shape[0]
     width = formatted_image.shape[1]

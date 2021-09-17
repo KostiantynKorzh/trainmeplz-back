@@ -2,14 +2,21 @@ from http import HTTPStatus
 
 from flask import Flask, request, make_response, jsonify
 from flask_cors import CORS
+from flask_pymongo import PyMongo
 
 from app.back.constants import UPLOAD_PATH
 from app.back.services import imageservice
 
 # from app.back.routes import mainroute
+from app.ml.services.dataservice import convert_image_to_array
+from app.ml.services.learningservice import Model
 
 app = Flask(__name__)
 cors = CORS(app, resources={r"*": {"origins": "*"}})
+
+app.config['MONGO_URI'] = 'mongodb://localhost:27017/dataset'
+mongo = PyMongo(app)
+db = mongo.db
 
 app.config["IMAGE_UPLOADS"] = UPLOAD_PATH
 
@@ -34,6 +41,10 @@ def upload_image():
 @app.route('/labels', methods=['GET'])
 def process_labels():
     if request.method == 'GET':
+        # entry = db.model.find_one({'label': 'cat'})
+        # print(entry['_id'])
+        # entry['images'] = [1, 2, 3]
+        # db.model.save(entry)
         return make_response(jsonify(labels), 200)
 
 
@@ -42,6 +53,14 @@ def get_image_stats():
     if request.method == 'GET':
         stats = imageservice.count_images_for_all_labels(labels)
         return make_response(jsonify(stats), 200)
+
+
+@app.route('/test', methods=['POST'])
+def test():
+    if request.method == 'POST':
+        image = request.files['file']
+        prediction = imageservice.test(image)
+        return make_response(jsonify(labels[prediction[0]]), 200)
 
 
 labels = ['cat', 'dog']

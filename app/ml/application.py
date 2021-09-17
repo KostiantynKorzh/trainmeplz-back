@@ -1,5 +1,14 @@
 from app.ml.services.learningservice import Model
 
-model = Model('cat', 'dog')
 
-model.train()
+# def init():
+#     model = Model('cat', 'dog')
+#     model.train()
+#
+#
+# init()
+
+# while True:
+#     if()
+
+# model.test()
