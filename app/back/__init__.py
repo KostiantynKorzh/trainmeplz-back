@@ -5,11 +5,6 @@ from flask_cors import CORS
 from flask_pymongo import PyMongo
 
 from app.back.constants import UPLOAD_PATH
-from app.back.services import imageservice
-
-# from app.back.routes import mainroute
-from app.ml.services.dataservice import convert_image_to_array
-from app.ml.services.learningservice import Model
 
 app = Flask(__name__)
 cors = CORS(app, resources={r"*": {"origins": "*"}})
@@ -19,6 +14,8 @@ mongo = PyMongo(app)
 db = mongo.db
 
 app.config["IMAGE_UPLOADS"] = UPLOAD_PATH
+
+from app.back.services import imageservice, devservice, labelservice, learningservice
 
 
 @app.route('/', methods=['GET', 'POST', 'DELETE', 'PATCH'])
@@ -31,7 +28,7 @@ def upload_image():
             image = request.files['file']
             if label == '':
                 raise Exception('No label present')
-            imageservice.save_image(image, label)
+            imageservice.convert_image_to_data_and_save(image, label)
             response = 'Image ' + image.filename + ' labeled with ' + label + ' was saved'
             return make_response(jsonify({'resp': response}), 200)
         except Exception as e:
@@ -51,7 +48,7 @@ def process_labels():
 @app.route('/images', methods=['GET'])
 def get_image_stats():
     if request.method == 'GET':
-        stats = imageservice.count_images_for_all_labels(labels)
+        stats = labelservice.count_images_for_all_labels(labels)
         return make_response(jsonify(stats), 200)
 
 
@@ -59,8 +56,15 @@ def get_image_stats():
 def test():
     if request.method == 'POST':
         image = request.files['file']
-        prediction = imageservice.test(image)
+        prediction = learningservice.test(image)
         return make_response(jsonify(labels[prediction[0]]), 200)
+
+
+@app.route('/dev', methods=['GET'])
+def empty_data_for_labels():
+    if request.method == 'GET':
+        devservice.empty_data_for_all_labels_in_db()
+        return make_response(jsonify({'resp': 'testing'}), 200)
 
 
 labels = ['cat', 'dog']

@@ -3,6 +3,7 @@ import os
 import numpy as np
 from skimage.io import imread
 
+from app.constants import UPLOAD_PATH
 from app.ml.services.imageservice import resize_image
 
 
@@ -36,7 +37,7 @@ def convert_all_images_to_array(label):
 
 
 def convert_saved_image_to_array(label, image_name):
-    image = imread(r'C:\Users\Kostiantyn_Korzh\Desktop\self_study\ml\trainmeplz\back\app\images\{}\{}\\'
+    image = imread(UPLOAD_PATH + r'{}\{}\\'
                    .format(label, image_name))
     return convert_image_to_array(image)
 
