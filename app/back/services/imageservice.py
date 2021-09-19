@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 
-from app.back import db
+from app.back.db import db
 from app.ml.services.dataservice import convert_image_to_array
 
 
