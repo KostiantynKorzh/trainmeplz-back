@@ -1,10 +1,12 @@
 from flask import make_response, jsonify
+from flask_apispec import MethodResource, doc
 from flask_restful import Resource
 
 from app.back import labels
 
 
-class Label(Resource):
+@doc(tags=['Labels'])
+class Label(MethodResource, Resource):
 
     def get(self):
         return make_response(jsonify(labels), 200)

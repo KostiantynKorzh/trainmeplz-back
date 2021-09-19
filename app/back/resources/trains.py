@@ -1,10 +1,11 @@
 from flask import make_response, jsonify, request
+from flask_apispec import MethodResource, doc
 from flask_restful import Resource
 
 from app.back.services import imageservice
 
-
-class Train(Resource):
+@doc(tags=['Trains'])
+class Train(MethodResource, Resource):
 
     def get(self):
         pass

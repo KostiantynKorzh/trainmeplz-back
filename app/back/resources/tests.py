@@ -1,11 +1,13 @@
 from flask import make_response, jsonify, request
+from flask_apispec import MethodResource, doc
 from flask_restful import Resource
 
 from app.back import labels
 from app.back.services import learningservice
 
 
-class Test(Resource):
+@doc(tags=['Tests'])
+class Test(MethodResource, Resource):
 
     def get(self):
         pass

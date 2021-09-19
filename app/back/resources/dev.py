@@ -1,10 +1,11 @@
 from flask import make_response, jsonify
+from flask_apispec import MethodResource, doc
 from flask_restful import Resource
 
 from app.back.services import devservice
 
-
-class Dev(Resource):
+@doc(tags=['Dev'])
+class Dev(MethodResource, Resource):
 
     def get(self):
         try:
