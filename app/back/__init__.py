@@ -1,6 +1,5 @@
 labels = ['cat', 'dog']
 
-
 from app.back.resources.dev import Dev
 from app.back.resources.stats.images import ImageStats
 from app.back.resources.stats.stats import Stats
@@ -9,7 +8,6 @@ from app.back.resources.trains import Train
 from app.back.resources.labels import Label
 
 from app.back.application import docs
-
 
 from app.back.application import app as application
 import app.back.routing
@@ -24,4 +22,4 @@ docs.register(Test)
 docs.register(Train)
 
 if __name__ == "__main__":
-    application.run(debug=True)
+    application.run(host='0.0.0.0', port=5000, debug=True)
