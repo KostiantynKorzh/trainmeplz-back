@@ -1,10 +1,9 @@
-import os
-
-from app.constants import UPLOAD_PATH
+from app.back.db import labelrepo, imagerepo
 
 
 def get_all_labels():
-    return ['cat', 'dog']
+    labels = list(labelrepo.get_all_labels())
+    return list(map(lambda x: x['label'], labels))
 
 
 def count_images_for_all_labels(labels):
@@ -16,5 +15,5 @@ def count_images_for_all_labels(labels):
 
 
 def count_images_for_label(label):
-    path = UPLOAD_PATH.format(label)
-    return len(os.listdir(path))
+    images = imagerepo.get_all_images_for_label(label)
+    return len(images)

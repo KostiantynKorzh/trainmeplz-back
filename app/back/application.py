@@ -23,4 +23,6 @@ app.config.update({
     'APISPEC_SWAGGER_UI_URL': '/swagger-ui/'
 })
 
+logger = app.logger
+
 docs = FlaskApiSpec(app)

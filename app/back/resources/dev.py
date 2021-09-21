@@ -1,15 +1,23 @@
-from flask import make_response, jsonify
+from flask import make_response, jsonify, request
 from flask_apispec import MethodResource, doc
 from flask_restful import Resource
 
 from app.back.services import devservice
+
 
 @doc(tags=['Dev'])
 class Dev(MethodResource, Resource):
 
     def get(self):
         try:
-            devservice.empty_data_for_all_labels_in_db()
+            args = request.args
+            if 'label' in args.keys():
+                label_to_delete = args['label']
+                print(label_to_delete)
+                if label_to_delete == 'all':
+                    devservice.empty_data_for_all_labels_in_db()
+                else:
+                    devservice.empty_data_for_label_in_db(label_to_delete)
             return make_response(jsonify({'resp': 'testing'}), 200)
         except Exception as e:
             print(str(e))
