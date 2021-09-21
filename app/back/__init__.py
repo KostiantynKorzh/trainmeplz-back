@@ -1,5 +1,3 @@
-labels = ['cat', 'dog']
-
 from app.back.resources.dev import Dev
 from app.back.resources.stats.images import ImageStats
 from app.back.resources.stats.stats import Stats

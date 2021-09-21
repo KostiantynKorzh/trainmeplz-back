@@ -3,7 +3,7 @@ from flask_apispec import MethodResource, doc, marshal_with, use_kwargs
 from flask_restful import Resource
 from marshmallow import Schema, fields
 
-from app.back import labels
+from app.back.services import labelservice
 
 
 class CreateLabelsRequestSchema(Schema):
@@ -20,6 +20,7 @@ class Label(MethodResource, Resource):
     @use_kwargs(CreateLabelsRequestSchema, location='json')
     @marshal_with(GetLabelsResponseSchema)
     def get(self):
+        labels = labelservice.get_all_labels()
         return make_response(jsonify(labels), 200)
 
     def post(self):
