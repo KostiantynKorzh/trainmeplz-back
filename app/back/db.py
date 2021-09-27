@@ -10,7 +10,7 @@ from app.back.repositories.labelrepo import LabelRepo
 from app.back.repositories.repo import Repo
 
 mongo_uri = os.environ.get('MONGO_URI', 'mongodb://127.0.0.1:27017/dataset')
-mongo_articles_uri = os.environ.get('MONGO_URI', 'mongodb://127.0.0.1:27017/articles')
+mongo_articles_uri = os.environ.get('MONGO_ARTICLES_URI', 'mongodb://127.0.0.1:27017/articles')
 
 mongo = PyMongo(app, mongo_uri)
 db = mongo.db

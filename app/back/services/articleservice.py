@@ -28,6 +28,8 @@ def format_labels_for_article(article):
 
 
 def create_article(title, description, content, labels):
+    if not labels:
+        labels = []
     articlerepo.create_article(title, description, content, labels)
 
 
