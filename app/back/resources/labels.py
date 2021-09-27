@@ -1,13 +1,9 @@
 from flask import make_response, jsonify
-from flask_apispec import MethodResource, doc, marshal_with, use_kwargs
+from flask_apispec import MethodResource, doc, marshal_with
 from flask_restful import Resource
 from marshmallow import Schema, fields
 
 from app.back.services import labelservice
-
-
-class CreateLabelsRequestSchema(Schema):
-    name = fields.String()
 
 
 class GetLabelsResponseSchema(Schema):
@@ -17,7 +13,6 @@ class GetLabelsResponseSchema(Schema):
 @doc(tags=['Labels'])
 class Label(MethodResource, Resource):
 
-    @use_kwargs(CreateLabelsRequestSchema, location='json')
     @marshal_with(GetLabelsResponseSchema)
     def get(self):
         labels = labelservice.get_all_labels()
