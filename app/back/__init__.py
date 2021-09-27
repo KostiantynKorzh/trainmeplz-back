@@ -12,12 +12,12 @@ import app.back.routing
 
 from app.back.constants import UPLOAD_PATH
 
-docs.register(Stats)
-docs.register(ImageStats)
-docs.register(Dev)
-docs.register(Label)
-docs.register(Test)
-docs.register(Train)
+# docs.register(Stats)
+# # docs.register(ImageStats)
+# docs.register(Dev)
+# docs.register(Label)
+# docs.register(Test)
+# docs.register(Train)
 
 if __name__ == "__main__":
     application.run(host='0.0.0.0', port=5000, debug=True)
