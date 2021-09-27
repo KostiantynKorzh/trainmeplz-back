@@ -14,7 +14,7 @@ class ArticleLabel(MethodResource, Resource):
         return json.loads(json_util.dumps(articlelabelservice.get_all_labels()))
 
     def post(self):
-        articlelabelservice.create_label('first')
+        articlelabelservice.create_label('third')
 
     def put(self):
         pass

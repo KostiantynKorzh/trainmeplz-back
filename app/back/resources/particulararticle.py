@@ -14,26 +14,22 @@ parser.add_argument('labelsIds', type=str, action='append')
 
 
 @doc(tags=['Articles'])
-class Article(MethodResource, Resource):
+class ParticularArticle(MethodResource, Resource):
 
-    def get(self):
-        return json.loads(json_util.dumps(articleservice.get_all_articles()))
-        # return articleservice.create_article('1', '2', '3', ['615186a12770edad1a24fbc7', '615192502108f7d4e5179c9e'])
+    def get(self, article_id):
+        return json.loads(json_util.dumps(articleservice.get_article_by_id(article_id)))
 
     def post(self):
+        pass
+
+    def put(self, article_id):
         args = parser.parse_args()
         title = args['title']
         description = args['description']
         content = args['content']
         labels_ids = args['labelsIds']
 
-        return articleservice.create_article(title, description, content, labels_ids)
+        articleservice.update_article(article_id, title, description, content, labels_ids)
 
-    def put(self):
-        pass
-
-    def delete(self):
-        pass
-
-    def get_by_id(self, article_id):
-        print(article_id)
+    def delete(self, article_id):
+        articleservice.delete_article(article_id)

@@ -12,6 +12,7 @@ from app.back.resources.stats.stats import Stats
 from app.back.resources.tests import Test
 from app.back.resources.trains import Train
 from app.back.resources.articles import Article
+from app.back.resources.particulararticle import ParticularArticle
 
 try:
     api.add_resource(Train, '/trains')
@@ -19,6 +20,7 @@ try:
     api.add_resource(ArticleLabel, '/articles/labels')
     api.add_resource(Label, '/labels')
     api.add_resource(Stats, '/stats')
+    api.add_resource(ParticularArticle, '/articles/<string:article_id>')
     api.add_resource(Article, '/articles')
     api.add_resource(ImageStats, '/stats/images')
     api.add_resource(Dev, '/dev')
