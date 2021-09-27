@@ -1,5 +1,6 @@
 import os
 
+import gridfs
 from flask_pymongo import PyMongo
 
 from app.back.application import app
@@ -18,7 +19,9 @@ db = mongo.db
 mongo_articles = PyMongo(app, mongo_articles_uri)
 db_articles = mongo_articles.db
 
-imagerepo = ImageRepo(db)
+fs = gridfs.GridFS(db)
+
+imagerepo = ImageRepo(db, fs)
 labelrepo = LabelRepo(db)
 repo = Repo(db)
 articlerepo = ArticleRepo(db_articles)
