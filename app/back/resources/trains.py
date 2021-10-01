@@ -16,7 +16,7 @@ class Train(MethodResource, Resource):
             image = request.files['file']
             # if label == '':
             #     raise Exception('No label present')
-            imageservice.convert_image_to_data_and_save(image, label)
+            imageservice.save_image(image, label)
             response = 'Image ' + image.filename + ' labeled with ' + label + ' was saved'
             return make_response(jsonify({'resp': response}), 200)
         except Exception as e:
