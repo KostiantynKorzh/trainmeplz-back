@@ -1,4 +1,4 @@
-from app.back.application import imagestorageservice
+from app.back.db import imagestorageservice
 
 
 def save_image(image, label):
