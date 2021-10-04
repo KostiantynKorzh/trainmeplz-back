@@ -15,9 +15,10 @@ class Dev(MethodResource, Resource):
                 label_to_delete = args['label']
                 print(label_to_delete)
                 if label_to_delete == 'all':
-                    devservice.empty_data_for_all_labels_in_db()
+                    devservice.empty_all()
                 else:
                     devservice.empty_data_for_label_in_db(label_to_delete)
+                    devservice.empty_stats_for_label(label_to_delete)
             return make_response(jsonify({'resp': 'testing'}), 200)
         except Exception as e:
             print(str(e))

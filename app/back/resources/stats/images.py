@@ -19,6 +19,5 @@ class ImageStats(MethodResource, Resource):
     @doc(description='Get stats about quantity of images in dataset for each label')
     @marshal_with(GetImageStatsResponse, HTTPStatus.OK)
     def get(self):
-        labels = labelservice.get_all_labels()
-        stats = labelservice.count_images_for_all_labels(labels)
+        stats = labelservice.get_stats_for_all_labels()
         return make_response(jsonify(stats), HTTPStatus.OK)

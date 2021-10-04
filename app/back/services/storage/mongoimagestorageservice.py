@@ -14,9 +14,7 @@ class MongoImageStorageService(ImageStorageService):
     def save(self, image, label):
         try:
             filename = create_labeled_filename(label)
-            print(filename)
-            image = self.fs.put(image.read(), filename=filename)
-            print(self.fs.get(image).read())
+            self.fs.put(image.read(), filename=filename)
         except Exception as e:
             print(str(e))
 
