@@ -14,3 +14,6 @@ def empty_data_for_all_labels_in_db():
 
 def empty_data_for_label_in_db(label):
     repo.clear_images_for_label(label)
+
+def empty_stats_for_label(label):
+    repo.clear_stats_for_label(label)

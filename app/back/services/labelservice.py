@@ -1,19 +1,22 @@
-from app.back.db import labelrepo, imagerepo
-
+from app.back.db import labelrepo
 
 def get_all_labels():
-    labels = list(labelrepo.get_all_labels())
-    return list(map(lambda x: x['label'], labels))
+    # return list(map(lambda x: x['label'], list(labelrepo.get_all_labels())))
+    return ['cat', 'dog']
 
 
-def count_images_for_all_labels(labels):
+def add_to_label_stats(label):
+    labelrepo.increment_image_count_for_label(label)
+
+
+def get_stats_for_all_labels():
     stats = {}
+    labels = get_all_labels()
     for label in labels:
-        stats[label] = count_images_for_label(label)
+        stats[label] = get_stats_for_label(label)
 
     return stats
 
 
-def count_images_for_label(label):
-    images = imagerepo.get_all_images_for_label(label)
-    return len(images)
+def get_stats_for_label(label):
+    return labelrepo.get_label_stats_by_label(label)['images_count']

@@ -23,5 +23,7 @@ threadpoolctl==2.2.0
 webargs==8.0.1
 Werkzeug==2.0.1
 opencv-python-headless==4.5.3.56
+
+scikit-image
 scikit-image
 PyJWT
