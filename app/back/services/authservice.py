@@ -1,4 +1,5 @@
 import datetime
+import os
 import re
 from functools import wraps
 
@@ -7,13 +8,15 @@ from flask import request
 
 
 def login(username, password):
-    true_username, true_password = 'admin', 'password'
+    true_username, true_password = os.getenv('ADMIN_USERNAME'), os.getenv('ADMIN_PASSWORD')
     if username == true_username and password == true_password:
         return create_jwt(username)
 
     return 'Invalid credentials'
 
 
+# decorator that uses on routes and let route to accept
+# requests only if token is present and valid
 def auth_check(function):
     @wraps(function)
     def wrapper(*args, **kwargs):
@@ -23,20 +26,22 @@ def auth_check(function):
         try:
             is_token_valid(token)
         except Exception as e:
-            return 'Invalid token: {}'.format(str(e))
+            return 'Invalid token. {}'.format(str(e))
         return function(*args, **kwargs)
 
     return wrapper
 
 
 def is_token_valid(token):
-    print(decode_jwt(token))
-    if 'admin' != decode_jwt(token):
-        raise Exception('Wrong sub')
+    try:
+        if os.getenv('ADMIN_USERNAME') != decode_jwt(token):
+            raise Exception()
+    except Exception as e:
+        raise Exception(str(e))
 
 
 def create_jwt(username):
-    secret_key = 'aboba'
+    secret_key = os.getenv('SECRET_KEY')
     try:
         payload = {
             'exp': datetime.datetime.utcnow() + datetime.timedelta(hours=1),
@@ -53,7 +58,7 @@ def create_jwt(username):
 
 
 def decode_jwt(token):
-    secret_key = 'aboba'
+    secret_key = os.getenv('SECRET_KEY')
     try:
         payload = jwt.decode(token, secret_key, 'HS256')
         return payload['sub']
