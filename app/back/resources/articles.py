@@ -5,6 +5,7 @@ from flask_apispec import MethodResource, doc
 from flask_restful import Resource, reqparse
 
 from app.back.services import articleservice
+from app.back.services.authservice import auth_check
 
 parser = reqparse.RequestParser()
 parser.add_argument('title', type=str)
@@ -18,8 +19,8 @@ class Article(MethodResource, Resource):
 
     def get(self):
         return json.loads(json_util.dumps(articleservice.get_all_articles()))
-        # return articleservice.create_article('1', '2', '3', ['615186a12770edad1a24fbc7', '615192502108f7d4e5179c9e'])
 
+    @auth_check
     def post(self):
         args = parser.parse_args()
         title = args['title']
@@ -29,9 +30,11 @@ class Article(MethodResource, Resource):
 
         return articleservice.create_article(title, description, content, labels_ids)
 
+    @auth_check
     def put(self):
         pass
 
+    @auth_check
     def delete(self):
         pass
 

@@ -1,6 +1,7 @@
 from flask_restful import Api
 
 from app.back.application import app
+from app.back.resources.auth import Auth
 from app.back.resources.stats.images import ImageStats
 
 api = Api(app)
@@ -24,5 +25,6 @@ try:
     api.add_resource(Article, '/articles')
     api.add_resource(ImageStats, '/stats/images')
     api.add_resource(Dev, '/dev')
+    api.add_resource(Auth, '/auth')
 except Exception as e:
     print(str(e))
