@@ -12,7 +12,7 @@ def login(username, password):
     if username == true_username and password == true_password:
         return create_jwt(username)
 
-    return 'Invalid credentials'
+    return Exception('Invalid credentials')
 
 
 # decorator that uses on routes and let route to accept
@@ -35,7 +35,7 @@ def auth_check(function):
 def is_token_valid(token):
     try:
         if os.getenv('ADMIN_USERNAME') != decode_jwt(token):
-            raise Exception()
+            raise Exception('Error during validating token')
     except Exception as e:
         raise Exception(str(e))
 
