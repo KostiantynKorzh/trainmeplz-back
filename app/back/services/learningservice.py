@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
 
+from app.back.application import app
 from app.ml.services.dataservice import convert_image_to_array
 from app.ml.services.learningservice import Model
 
@@ -14,5 +15,7 @@ def test(image):
     model = Model('cat', 'dog')
     model.train()
     print(data)
+
+    app.logger.debug('Testing model')
 
     return model.test(data)

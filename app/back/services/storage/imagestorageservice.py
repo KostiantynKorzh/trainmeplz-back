@@ -1,7 +1,12 @@
 from abc import abstractmethod, ABC
 
+from app.back.application import app
+
 
 class ImageStorageService(ABC):
+
+    def __init__(self):
+        app.logger.info('Initializing image service: {}'.format(self.__class__.__name__))
 
     @abstractmethod
     def save(self, image, label):

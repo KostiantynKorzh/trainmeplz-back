@@ -1,3 +1,5 @@
+import logging
+
 from apispec import APISpec
 from apispec.ext.marshmallow import MarshmallowPlugin
 from flask import Flask
@@ -7,6 +9,8 @@ from flask_cors import CORS
 from app.constants import UPLOAD_PATH
 
 app = Flask(__name__)
+
+logging.basicConfig(level=logging.DEBUG, format='%(asctime)s %(levelname)s %(threadName)s %(pathname)s : %(message)s')
 
 cors = CORS(app, resources={r"*": {"origins": "*"}})
 

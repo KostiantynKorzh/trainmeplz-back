@@ -6,10 +6,14 @@ from functools import wraps
 import jwt
 from flask import request
 
+from app.back.application import app
+
 
 def login(username, password):
+    app.logger.info('Attempt to login {}'.format(username))
     true_username, true_password = os.getenv('ADMIN_USERNAME'), os.getenv('ADMIN_PASSWORD')
     if username == true_username and password == true_password:
+        app.logger.info('Password for {} was entered correctly'.format(username))
         return create_jwt(username)
 
     return Exception('Invalid credentials')
@@ -37,6 +41,7 @@ def is_token_valid(token):
         if os.getenv('ADMIN_USERNAME') != decode_jwt(token):
             raise Exception('Error during validating token')
     except Exception as e:
+        app.logger.info('Error validating token. {}'.format(str(e)))
         raise Exception(str(e))
 
 
@@ -48,19 +53,23 @@ def create_jwt(username):
             'iat': datetime.datetime.utcnow(),
             'sub': username
         }
-        return jwt.encode(
+
+        token = jwt.encode(
             payload=payload,
             key=secret_key,
             algorithm='HS256'
         )
+        app.logger.info('Creating jwt for {}'.format(username))
+        return token
     except Exception as e:
-        print(str(e))
+        app.logger.warning('Error creating jwt. {}'.format(str(e)))
 
 
 def decode_jwt(token):
     secret_key = os.getenv('SECRET_KEY')
     try:
         payload = jwt.decode(token, secret_key, 'HS256')
+        app.logger.info('Decoding token {}'.format(token))
         return payload['sub']
     except jwt.ExpiredSignatureError:
         return 'Signature expired. Please log in again.'

@@ -1,3 +1,4 @@
+from app.back.application import app
 from app.back.db import articlerepo
 from app.back.services import articlelabelservice
 
@@ -7,12 +8,14 @@ def get_all_articles():
     for article in articles:
         format_labels_for_article(article)
 
+    app.logger.debug('Getting all articles')
     return articles
 
 
 def get_article_by_id(id):
     article = list(articlerepo.get_article_by_id(id))[0]
     format_labels_for_article(article)
+    app.logger.debug('Getting article with id: {}'.format(id))
     return article
 
 
@@ -25,17 +28,21 @@ def format_labels_for_article(article):
         article['labels'] = formatted_labels
         del article['_id']
         article['id'] = str(id)
+        app.logger.debug('Formatting label for article: {}'.format(article['id']))
 
 
 def create_article(title, description, content, labels):
     if not labels:
         labels = []
     articlerepo.create_article(title, description, content, labels)
+    app.logger.info('Creating article with title: {}'.format(title))
 
 
 def update_article(id, title, description, content, labels):
     articlerepo.update_article(id, title, description, content, labels)
+    app.logger.info('Updating article with id: {} and title: {}'.format(id, title))
 
 
 def delete_article(id):
     articlerepo.delete_article(id)
+    app.logger.info('Deleting article with id: {}'.format(id))

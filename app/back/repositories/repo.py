@@ -1,5 +1,6 @@
 import gridfs
 
+from app.back.application import app
 from app.back.services import imageservice
 
 
@@ -21,7 +22,7 @@ class Repo:
                 entry = self.fs.find_one({'filename': filename})
                 self.fs.delete(entry._id)
         except Exception as e:
-            print(str(e))
+            app.logger.warning('Getting stats for label: {}'.format(label))
 
     def clear_stats_for_label(self, label):
         entry = self.db.stats.find_one({'label': label})
