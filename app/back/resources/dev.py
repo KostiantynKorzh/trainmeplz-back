@@ -1,8 +1,12 @@
 from flask import make_response, jsonify, request
 from flask_apispec import MethodResource, doc
-from flask_restful import Resource
+from flask_restful import Resource, reqparse
 
+from app.back.application import app
 from app.back.services import devservice
+
+parser = reqparse.RequestParser()
+parser.add_argument('logLevel', type=str)
 
 
 @doc(tags=['Dev'])
@@ -24,7 +28,9 @@ class Dev(MethodResource, Resource):
             print(str(e))
 
     def post(self):
-        pass
+        args = parser.parse_args()
+        level = args['logLevel']
+        devservice.change_log_level(level)
 
     def put(self):
         pass

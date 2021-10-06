@@ -10,7 +10,7 @@ from app.constants import UPLOAD_PATH
 
 app = Flask(__name__)
 
-logging.basicConfig(level=logging.DEBUG, format='%(asctime)s %(levelname)s %(threadName)s %(pathname)s : %(message)s')
+logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s %(threadName)s %(pathname)s : %(message)s')
 
 cors = CORS(app, resources={r"*": {"origins": "*"}})
 
