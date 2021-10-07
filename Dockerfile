@@ -1,17 +1,18 @@
-FROM python:3.8-slim-buster
+FROM python:3.9-slim-buster
 
-COPY . /src
+COPY . /source
 
-WORKDIR /src
+WORKDIR /source
 
 RUN pip3 install --upgrade pip
 RUN pip3 install -r requirements.txt
 
 EXPOSE 5000
 
-WORKDIR /src/app/back
+WORKDIR /source/src/back
 
-ENV FLASK_APP=__init__.py
+ENV FLASK_APP=run.py
+ENV PYTHONPATH=/source/
 
 ENTRYPOINT ["flask"]
 
