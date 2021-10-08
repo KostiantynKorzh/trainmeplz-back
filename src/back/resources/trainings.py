@@ -1,5 +1,5 @@
 from flask import make_response, jsonify, request
-from flask_apispec import MethodResource, doc, marshal_with
+from flask_apispec import MethodResource, doc, marshal_with, use_kwargs
 from flask_restful import Resource
 from marshmallow import Schema, fields
 
@@ -17,6 +17,7 @@ class TrainingResponseError(Schema):
 @doc(tags=['Trainings'])
 class Trainings(MethodResource, Resource):
 
+    @doc(consumes=['multipart/form-data'])
     @marshal_with(TrainingResponse, code=200, description='Confirmation message that image was upload successfully')
     @marshal_with(TrainingResponseError, code=503, description='Returns error')
     def post(self):

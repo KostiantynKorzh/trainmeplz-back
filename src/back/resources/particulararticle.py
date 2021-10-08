@@ -20,9 +20,6 @@ class ParticularArticle(MethodResource, Resource):
     def get(self, article_id):
         return json.loads(json_util.dumps(articleservice.get_article_by_id(article_id)))
 
-    def post(self):
-        pass
-
     @auth_check
     def put(self, article_id):
         args = parser.parse_args()

@@ -19,9 +19,6 @@ class LoginResponse(Schema):
 @doc(tags=['Auth'])
 class Auth(MethodResource, Resource):
 
-    def __init__(self):
-        self.login_response = LoginResponse()
-
     @doc(description='Validate JWT',
          params={
              'token': {

@@ -5,6 +5,7 @@ from src.back.setup import logger
 
 def get_all_articles():
     articles = list(articlerepo.get_all_articles())
+    print(articles)
     for article in articles:
         format_labels_for_article(article)
 

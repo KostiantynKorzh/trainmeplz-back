@@ -42,3 +42,36 @@ def register_resources(app):
     docs.register(ParticularArticle)
     docs.register(Article)
     docs.register(Auth)
+
+    add_trainings_upload_image_parameter(docs)
+    add_tests_upload_test_image(docs)
+
+
+def add_trainings_upload_image_parameter(docs):
+    training = [
+        {
+            'in': 'query',
+            'type': 'string',
+            'required': True,
+            'name': 'label',
+        },
+        {
+            'in': 'formData',
+            'type': 'file',
+            'required': True,
+            'name': 'file',
+        }]
+
+    docs.spec.to_dict()['paths']['/trainings']['post']['parameters'] = training
+
+
+def add_tests_upload_test_image(docs):
+    training = [
+        {
+            'in': 'formData',
+            'type': 'file',
+            'required': True,
+            'name': 'file',
+        }]
+
+    docs.spec.to_dict()['paths']['/tests']['post']['parameters'] = training
