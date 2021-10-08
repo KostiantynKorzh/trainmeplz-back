@@ -7,7 +7,7 @@ from src.back.resources.articlelabel import ArticleLabel
 from src.back.resources.labels import Label
 from src.back.resources.stats.stats import Stats
 from src.back.resources.tests import Test
-from src.back.resources.trains import Train
+from src.back.resources.trainings import Trainings
 from src.back.resources.articles import Article
 from src.back.resources.particulararticle import ParticularArticle
 
@@ -15,7 +15,7 @@ from src.back.resources.particulararticle import ParticularArticle
 def setup_routing(app):
     api = Api(app)
 
-    api.add_resource(Train, '/trains')
+    api.add_resource(Trainings, '/trainings')
     api.add_resource(Test, '/tests')
     api.add_resource(ArticleLabel, '/articles/labels')
     api.add_resource(Label, '/labels')

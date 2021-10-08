@@ -11,7 +11,7 @@ from src.back.resources.particulararticle import ParticularArticle
 from src.back.resources.stats.images import ImageStats
 from src.back.resources.stats.stats import Stats
 from src.back.resources.tests import Test
-from src.back.resources.trains import Train
+from src.back.resources.trainings import Trainings
 
 
 def setup_swagger(app):
@@ -37,7 +37,7 @@ def register_resources(app):
     docs.register(Dev)
     docs.register(Label)
     docs.register(Test)
-    docs.register(Train)
+    docs.register(Trainings)
     docs.register(ArticleLabel)
     docs.register(ParticularArticle)
     docs.register(Article)

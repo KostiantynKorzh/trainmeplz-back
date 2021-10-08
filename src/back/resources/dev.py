@@ -1,6 +1,7 @@
 from flask import make_response, jsonify, request
-from flask_apispec import MethodResource, doc
+from flask_apispec import MethodResource, doc, use_kwargs
 from flask_restful import Resource, reqparse
+from marshmallow import fields
 
 from src.back.services import devservice
 
@@ -11,6 +12,13 @@ parser.add_argument('logLevel', type=str)
 @doc(tags=['Dev'])
 class Dev(MethodResource, Resource):
 
+    @doc(description='Allows to clear all data for particular label or for all labels at once',
+         params={
+             'label': {
+                 'description': 'Label to empty all data for. Use "all" for all labels at once',
+                 'in': 'query', 'type': 'string', 'required': True
+             }
+         })
     def get(self):
         try:
             args = request.args
@@ -26,13 +34,9 @@ class Dev(MethodResource, Resource):
         except Exception as e:
             print(str(e))
 
+    @doc(description='Change log level for the application')
+    @use_kwargs({'logLevel': fields.Str()})
     def post(self):
         args = parser.parse_args()
         level = args['logLevel']
         devservice.change_log_level(level)
-
-    def put(self):
-        pass
-
-    def delete(self):
-        pass

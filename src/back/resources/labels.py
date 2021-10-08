@@ -17,12 +17,3 @@ class Label(MethodResource, Resource):
     def get(self):
         labels = labelservice.get_all_labels()
         return make_response(jsonify(labels), 200)
-
-    def post(self):
-        pass
-
-    def put(self):
-        pass
-
-    def delete(self):
-        pass
