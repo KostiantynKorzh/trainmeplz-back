@@ -1,0 +1,46 @@
+trigger:
+- azure-pipelines
+
+variables:
+  azureSubscription: 'project_subscription(ed8e35d8-998d-4ae5-8bc2-0b7771b9a9ec)'
+  appName: 'trainmeplz-back'
+  # containerRegistry: <Name of the Azure container registry>
+  imageRepository: 'kostiakorzh/trainmeplz-back'
+  dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
+  tag: '$(Build.BuildId)'
+  vmImageName: 'ubuntu-latest'
+
+stages:
+- stage: Build
+  displayName: Build and push docker image
+  jobs:
+  
+  - job: Build
+    displayName: Build docker image
+    pool:
+      vmImage: $(vmImageName)
+    steps:
+    - task: Docker@2
+      displayName: Login to Dockerhub
+      inputs:
+        command: login
+        containerRegistry: docker-connection
+    - task: Docker@2
+      displayName: Build and push an image to container registry
+      inputs:
+        command: buildAndPush
+        repository: $(imageRepository)
+        dockerfile: $(dockerfilePath)
+        # containerRegistry: $(dockerRegistryServiceConnection)
+        tags: |
+          $(tag)
+        
+  - job: Deploy
+    displayName: Deploy to Web Service for Containers
+    dependsOn: Build
+    steps:
+    - task: AzureWebAppContainer@1
+      inputs:
+        azureSubscription: 'project_subscription(ed8e35d8-998d-4ae5-8bc2-0b7771b9a9ec)'
+        appName: 'trainmeplz-back'
+        containers: 'kostiakorzh/trainmeplz-back'
