@@ -1,0 +1,13 @@
+
+trigger:
+- master
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- task: AzureWebAppContainer@1
+  inputs:
+    azureSubscription: 'project_subscription(ed8e35d8-998d-4ae5-8bc2-0b7771b9a9ec)'
+    appName: 'trainmeplz-back'
+    containers: 'kostiakorzh/trainmeplz-back'
